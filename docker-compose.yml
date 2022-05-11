@@ -1,0 +1,38 @@
+version: '3'
+services:
+  reverse-proxy:
+    build:
+      context: docker/app-dev
+    volumes:
+      - ./internal:/internal
+    working_dir: /internal/reverse-proxy
+    ports:
+      - "127.0.0.1:5000:$PORT"
+    env_file:
+      - .env
+    environment:
+      SERVER_TO_RUN: http
+  hello-world-http:
+    build:
+      context: docker/app-dev
+    volumes:
+      - ./internal:/internal
+    working_dir: /internal/hello-world-service
+    ports:
+      - "127.0.0.1:5001:$PORT"
+    env_file:
+      - .env
+    environment:
+      SERVER_TO_RUN: http
+  hello-world-two-http:
+    build:
+      context: docker/app-dev
+    volumes:
+      - ./internal:/internal
+    working_dir: /internal/hello-world-service
+    ports:
+      - "127.0.0.1:5002:$PORT"
+    env_file:
+      - .env
+    environment:
+      SERVER_TO_RUN: http
